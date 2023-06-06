@@ -1,0 +1,68 @@
+* {
+    font-family: "微軟正黑體";
+}
+
+#header,
+#icon {
+    width: 60%;
+    margin: 2% auto;
+}
+
+#header img {
+    width: 100%;
+}
+
+#icon ul {
+    width: 30%;
+    margin: 0 auto;
+}
+
+#icon li {
+    color: black;
+    display: inline;
+}
+
+#icon img {
+    height: 70px;
+    width: 70px;
+}
+
+img {
+    width: 100%;
+}
+
+li,
+a {
+    list-style: none;
+    color: black;
+    font-weight: bold;
+}
+
+.nav a {
+    color: blue;
+}
+
+.col-md-3 {
+    height: 300PX;
+    border-radius: 10px;
+    background: rgb(131, 186, 255);
+}
+
+#myScrollspy {
+    background-color: rgb(190, 219, 255)
+}
+
+.section {
+    padding: 20px;
+}
+
+.section h4 {
+    padding: 25px 0;
+}
+
+.footer {
+    background: #7198c6;
+    text-align: center;
+    border-radius: 5px 40px 5px 40px;
+    padding: 20px 0;
+}
