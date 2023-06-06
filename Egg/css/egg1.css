@@ -1,0 +1,87 @@
+* {
+    font-family: "微軟正黑體";
+}
+
+li,a {
+    list-style: none;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.col-md-9 {
+    background-color: rgb(190, 219, 255);
+}
+
+.col-md-3 {
+    height: 300PX;
+    border-radius: 10px;
+    background: rgb(131, 186, 255);
+}
+
+.row {
+    padding-top: 20px;
+}
+
+#orange {
+    padding-top: 0;
+}
+
+.col-sm-9 img {
+    padding: 20px;
+    width: 100%;
+}
+
+.col-sm-3 {
+    padding-top: 20px;
+}
+
+#header,#icon {
+    width: 60%;
+    margin: 2% auto;
+}
+
+#header img {
+    width: 100%;
+}
+
+#icon ul {
+    width: 30%;
+    margin: 0 auto;
+}
+
+#icon li {
+    color: black;
+    display: inline;
+}
+
+#icon img {
+    height: 70px;
+    width: 70px;
+}
+
+#change {
+    font-size: 30px;
+    font-weight: bold;
+    color: blue;
+    position: relative;
+    top: 20px;
+}
+
+.ans {
+    width: 450px;
+    height: 450px;
+}
+
+.footer {
+    background: #7198c6;
+    text-align: center;
+    border-radius: 5px 40px 5px 40px;
+    padding: 20px 0;
+}
+.joke{
+    white-space: pre-wrap; /* css-3 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */ 
+}

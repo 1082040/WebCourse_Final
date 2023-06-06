@@ -1,0 +1,113 @@
+* {
+    font-family: "微軟正黑體";
+}
+
+#header,
+#icon {
+    width: 60%;
+    margin: 2% auto;
+}
+
+#header img {
+    width: 100%;
+}
+
+#icon ul {
+    width: 30%;
+    margin: 0 auto;
+}
+
+#icon li {
+    color: black;
+    display: inline;
+}
+
+#icon img {
+    height: 70px;
+    width: 70px;
+}
+
+#n1,
+#n1-1 {
+    color: black;
+    font-weight: bold;
+    border-style: none;
+    background-color: rgb(228, 228, 228);
+}
+
+#n2,
+#n2-1 {
+    color: black;
+    font-weight: bold;
+    border-style: none;
+    background-color: rgb(175, 215, 255);
+}
+
+#n3,
+#n3-1 {
+    color: black;
+    font-weight: bold;
+    border-style: none;
+    background-color: rgb(161, 192, 166);
+}
+
+#n4,
+#n4-1 {
+    color: black;
+    font-weight: bold;
+    border-style: none;
+    background-color: rgb(255, 215, 175);
+
+}
+
+.col-md-3 {
+    height: 300PX;
+    border-radius: 10px;
+    background: rgb(131, 186, 255);
+}
+
+li,
+a {
+    list-style: none;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.col-sm-4,
+.col-sm-8 {
+    padding-top: 20px;
+    padding-left: 50px;
+}
+
+.col-sm-8 {
+    height: 300px;
+}
+
+.card-footer {
+    width: 96%;
+    margin: 0 auto;
+}
+
+.content {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.profile-pic {
+    display: inline;
+    margin: 0 auto;
+    border-radius: 50%;
+}
+
+.card-text li {
+    list-style-type: circle;
+    color: black;
+    font-size: 20px;
+}
+
+.footer {
+    background: #7198c6;
+    text-align: center;
+    border-radius: 5px 5px 5px 5px;
+    padding: 20px 0;
+}

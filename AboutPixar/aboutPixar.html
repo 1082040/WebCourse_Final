@@ -1,0 +1,375 @@
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <title>關於皮克斯</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="css/aboutPixar1.css" media="screen">
+    <link rel="stylesheet" href="css/aboutPixar2.css" media="screen and (min-width:900px) and (max-width:1300px)">
+    <link rel="stylesheet" href="css/aboutPixar3.css" media="screen and (max-width:899px)">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gojs/1.8.36/go-debug.js"></script>
+    <script>
+        function init() {
+            if (window.goSamples) goSamples(); // init for these samples -- you don't need to call this
+            var $ = go.GraphObject.make; // for conciseness in defining templates
+            // some constants that will be reused within templates
+            var mt8 = new go.Margin(8, 0, 0, 0);
+            var mr8 = new go.Margin(0, 8, 0, 0);
+            var ml8 = new go.Margin(0, 0, 0, 8);
+            var roundedRectangleParams = {
+                parameter1: 2, // set the rounded corner
+                spot1: go.Spot.TopLeft,
+                spot2: go.Spot.BottomRight // make content go all the way to inside edges of rounded corners
+            };
+            myDiagram =
+                $(go.Diagram, "myDiagramDiv", // the DIV HTML element
+                    {
+                        // Put the diagram contents at the top center of the viewport
+                        initialDocumentSpot: go.Spot.Top,
+                        initialViewportSpot: go.Spot.Top,
+                        // OR: Scroll to show a particular node, once the layout has determined where that node is
+                        // "InitialLayoutCompleted": function(e) {
+                        //  var node = e.diagram.findNodeForKey(28);
+                        //  if (node !== null) e.diagram.commandHandler.scrollToPart(node);
+                        // },
+                        layout: $(go.TreeLayout, // use a TreeLayout to position all of the nodes
+                            {
+                                isOngoing: false, // don't relayout when expanding/collapsing panels
+                                treeStyle: go.TreeLayout.StyleLastParents,
+                                // properties for most of the tree:
+                                angle: 90,
+                                layerSpacing: 80,
+                                // properties for the "last parents":
+                                alternateAngle: 0,
+                                alternateAlignment: go.TreeLayout.AlignmentStart,
+                                alternateNodeIndent: 15,
+                                alternateNodeIndentPastParent: 1,
+                                alternateNodeSpacing: 15,
+                                alternateLayerSpacing: 40,
+                                alternateLayerSpacingParentOverlap: 1,
+                                alternatePortSpot: new go.Spot(0.001, 1, 20, 0),
+                                alternateChildPortSpot: go.Spot.Left
+                            })
+                    });
+            // This function provides a common style for most of the TextBlocks.
+            // Some of these values may be overridden in a particular TextBlock.
+            function textStyle(field) {
+                return [{
+                        font: "12px Roboto, sans-serif",
+                        stroke: "rgba(0, 0, 0, .60)",
+                        visible: false // only show textblocks when there is corresponding data for them
+                    },
+                    new go.Binding("visible", field, function(val) {
+                        return val !== undefined;
+                    })
+                ];
+            }
+            // define Converters to be used for Bindings
+            function theNationFlagConverter(nation) {
+                return "https://www.nwoods.com/images/emojiflags/" + nation + ".png";
+            }
+            // define the Node template
+            myDiagram.nodeTemplate =
+                $(go.Node, "Auto", {
+                        locationSpot: go.Spot.Top,
+                        isShadowed: true,
+                        shadowBlur: 1,
+                        shadowOffset: new go.Point(0, 1),
+                        shadowColor: "rgba(180, 215, 255, 0.95)",
+                        selectionAdornmentTemplate: // selection adornment to match shape of nodes
+                            $(go.Adornment, "Auto",
+                                $(go.Shape, "RoundedRectangle", roundedRectangleParams, {
+                                    fill: null,
+                                    stroke: "#95c6ff",
+                                    strokeWidth: 3
+                                }),
+                                $(go.Placeholder)
+                            ) // end Adornment
+                    },
+                    $(go.Shape, "RoundedRectangle", roundedRectangleParams, {
+                            name: "SHAPE",
+                            fill: "#95c6ff",
+                            strokeWidth: 0
+                        },
+                        // bluish if highlighted, white otherwise
+                        new go.Binding("fill", "isHighlighted", function(h) {
+                            return h ? "#e8eaf6" : "#ffffff";
+                        }).ofObject()
+                    ),
+                    $(go.Panel, "Vertical",
+                        $(go.Panel, "Horizontal", {
+                                margin: 8
+                            },
+                            $(go.Picture, // flag image, only visible if a nation is specified
+                                {
+                                    margin: mr8,
+                                    visible: false,
+                                    desiredSize: new go.Size(50, 50)
+                                },
+                                new go.Binding("source", "nation", theNationFlagConverter),
+                                new go.Binding("visible", "nation", function(nat) {
+                                    return nat !== undefined;
+                                }),
+                            ),
+                            $(go.Panel, "Table",
+                                $(go.TextBlock, {
+                                        row: 0,
+                                        alignment: go.Spot.Left,
+                                        font: "16px Roboto, sans-serif",
+                                        stroke: "rgba(0, 0, 0, .87)",
+                                        maxSize: new go.Size(160, NaN)
+                                    },
+                                    new go.Binding("text", "name")
+                                ),
+                                $(go.TextBlock, textStyle("title"), {
+                                        row: 1,
+                                        alignment: go.Spot.Left,
+                                        maxSize: new go.Size(160, NaN)
+                                    },
+                                    new go.Binding("text", "title")
+                                ),
+                                $("PanelExpanderButton", "INFO", {
+                                    row: 0,
+                                    column: 1,
+                                    rowSpan: 2,
+                                    margin: ml8
+                                })
+                            ),
+                        ),
+                        $(go.Shape, "LineH", {
+                                stroke: "rgba(0, 0, 0, .60)",
+                                strokeWidth: 1,
+                                height: 1,
+                                stretch: go.GraphObject.Horizontal
+                            },
+                            new go.Binding("visible").ofObject("INFO") // only visible when info is expanded
+                        ),
+                        $(go.Panel, "Vertical", {
+                                name: "INFO", // identify to the PanelExpanderButton
+                                stretch: go.GraphObject.Horizontal, // take up whole available width
+                                margin: 8,
+                                defaultAlignment: go.Spot.Left, // thus no need to specify alignment on each element
+                            },
+                            $(go.TextBlock, textStyle("headOf"),
+                                new go.Binding("text", "headOf", function(head) {
+                                    return "Head of: " + head;
+                                })
+                            ),
+                            $(go.TextBlock, textStyle("boss"),
+                                new go.Binding("margin", "headOf", function(head) {
+                                    return mt8;
+                                }), // some space above if there is also a headOf value
+                                new go.Binding("text", "boss", function(boss) {
+                                    var boss = myDiagram.model.findNodeDataForKey(boss);
+                                    if (boss !== null) {
+                                        return "Reporting to: " + boss.name;
+                                    }
+                                    return "";
+                                })
+                            )
+                        )
+                    )
+                );
+            // define the Link template, a simple orthogonal line
+            myDiagram.linkTemplate =
+                $(go.Link, go.Link.Orthogonal, {
+                        corner: 5,
+                        selectable: false
+                    },
+                    $(go.Shape, {
+                        strokeWidth: 3,
+                        stroke: "#424242"
+                    })); // dark gray, rounded corner links
+            // set up the nodeDataArray, describing each person/position
+            var nodeDataArray = [{
+                    key: 0,
+                    name: "皮克斯發展史",
+                    title: "General Legal Division Director",
+                    headOf: "General Legal Division"
+                },
+                {
+                    key: 1,
+                    boss: 0,
+                    name: "早期歷史",
+                    title: "General Legal Division Director",
+                    headOf: "General Legal Division"
+                },
+                {
+                    key: 2,
+                    boss: 0,
+                    name: "迪士尼時期",
+                    title: "General Legal Division Director",
+                    headOf: "General Legal Division"
+                },
+                {
+                    key: 3,
+                    boss: 0,
+                    name: "公司擴張",
+                    title: "General Legal Division Director",
+                    headOf: "General Legal Division"
+                },
+                {
+                    key: 4,
+                    boss: 0,
+                    name: "合作教育",
+                    title: "General Legal Division Director",
+                    headOf: "General Legal Division"
+                },
+                {
+                    key: 5,
+                    boss: 1,
+                    name: "前身",
+                    title: "1979",
+                    headOf: "皮克斯的前身是盧卡斯電影公司的電腦圖形部。"
+                },
+                {
+                    key: 6,
+                    boss: 1,
+                    name: "收購",
+                    title: "1986",
+                    headOf: "喬治·盧卡斯決定出售這個團隊。史提夫·賈伯斯決定以1千萬美元收購了這個團隊。賈伯斯任新公司的董事長，艾德文·卡特姆任公司總監，匠白光任執行副總裁。"
+                },
+                {
+                    key: 7,
+                    boss: 1,
+                    name: "搬遷",
+                    title: "1990年4月",
+                    headOf: "皮克斯向Vicom Systems出售其硬體部門，包括所有的專有硬體技術和圖像處理軟體，並從100名員工中裁員18人，將辦公地點從聖拉斐爾遷到里奇蒙。當年，皮克斯淨虧損830萬美元。"
+                },
+                {
+                    key: 8,
+                    boss: 1,
+                    name: "決定",
+                    title: "1991年",
+                    headOf: "經過一個艱難的開始後，皮克斯又裁員30人，其中包括公司總裁查克·柯斯塔，從而使員工數僅剩42人，基本上與最初相同。當年，皮克斯接到了迪士尼動畫的一個訂單。迪士尼動畫作為製片方投資2600萬美元，由皮克斯製作三部電腦動畫，第一部為《玩具總動員》。儘管得到了迪士尼的訂單，由於長期不能盈利，賈伯斯決定出售皮克斯；到了1994年賈伯斯甚至打算將皮克斯賣給包括微軟在內的一些公司。直到紐約的評論家認為《玩具總動員》將會成功，並且迪士尼同意將玩具總動員推到1995年的暑期檔發行之後，賈伯斯才決定暫停出售，給皮克斯最後一個機會。玩具總動員》發布，在全球獲得3.61億美元的票房。"
+                },
+                {
+                    key: 9,
+                    boss: 2,
+                    name: "僵持",
+                    title: "2004年",
+                    headOf: "雙方在2004年開始新一輪的談判。皮克斯想要保留自己動畫電影的全部著作權，完全自主投資且得到100%的利潤，而只付給迪士尼10-15%的發行費用。更重要的是，皮克斯要求取得之前5部動畫電影的全部著作權，其中包括《超人特攻隊》和《Cars》。迪士尼表示條件無法接受。由於賈伯斯和迪士尼的CEO麥可·艾斯納都不願讓步，使得之後的談判陷入僵局。皮克斯開始尋求迪士尼之外的發行商。"
+                },
+                {
+                    key: 10,
+                    boss: 2,
+                    name: "恢復",
+                    title: "2005年9月",
+                    headOf: "兩家公司的談判再度恢復。"
+                },
+                {
+                    key: 11,
+                    boss: 2,
+                    name: "併購",
+                    title: "2006年1月24日",
+                    headOf: "迪士尼宣布以交換股票的形式，用74億美元併購皮克斯。"
+                },
+                {
+                    key: 12,
+                    boss: 3,
+                    name: "分部",
+                    title: "2010年4月20日",
+                    headOf: "皮克斯在加拿大卑詩省溫哥華開設皮克斯加拿大分部。"
+                },
+                {
+                    key: 13,
+                    boss: 3,
+                    name: "關閉",
+                    title: "2013年10月",
+                    headOf: "工作室被迪士尼影業關閉"
+                },
+                {
+                    key: 14,
+                    boss: 4,
+                    name: "合作",
+                    title: "2017年",
+                    headOf: "皮克斯與可汗學院合作共同推出「Pixar in a box[44]」專案，該專案將動畫的製作過程用課程、互動、代碼展示。"
+                },
+                {
+                    key: 15,
+                    boss: 8,
+                    name: "招募",
+                    title: "1995年11月29日",
+                    headOf: "皮克斯進行首次公開募股，每股22美元"
+                },
+                {
+                    key: 16,
+                    boss: 8,
+                    name: "遷址",
+                    title: "2000年11月",
+                    headOf: "皮克斯將辦公地點遷到愛莫利維爾"
+                },
+                {
+                    key: 17,
+                    boss: 9,
+                    name: "延期",
+                    title: "2004年底",
+                    headOf: "皮克斯原計劃於2005年末發行的電影《Cars》推遲到2006年夏天發行。"
+                },
+                {
+                    key: 18,
+                    boss: 11,
+                    name: "合併",
+                    title: "2006年5月5日",
+                    headOf: "交易完成，併購後分銷協定也終止，從Cars開始，電影品牌的標示變為「Disney•Pixar」。"
+                }
+            ];
+            // create the Model with data for the tree, and assign to the Diagram
+            myDiagram.model =
+                $(go.TreeModel, {
+                    nodeParentKeyProperty: "boss", // this property refers to the parent node data
+                    nodeDataArray: nodeDataArray
+                });
+            // Overview
+            myOverview =
+                $(go.Overview, "myOverviewDiv", // the HTML DIV element for the Overview
+                    {
+                        observed: myDiagram,
+                        contentAlignment: go.Spot.Center
+                    }); // tell it which Diagram to show and pan
+        }
+    </script>
+</head>
+
+<body onload="init()">
+    <div id="header">
+        <img src="../HPimage/pixar-banner.jpeg">
+    </div>
+    <div id="icon">
+        <ul>
+            <img src="../HPimage/fff.png">
+            <li>關於皮克斯</li>
+        </ul>
+    </div>
+    <hr>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="content">
+                    <div id="sample" style="position: relative;">
+                        <div id="myDiagramDiv" style="background-color: rgb(180, 215, 255); border: solid 1px black; width: 100%; height: 700px"></div>
+                        <div id="myOverviewDiv"></div> <!-- Styled in a <style> tag at the top of the html page -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm"><a href="../AboutPixar/aboutPixar.html">關於皮克斯</a></div>
+            <div class="col-sm"><a href="../Chronology/chronology.html">作品年代表</a></div>
+            <div class="col-sm"><a href="../Intro/intro.html">著名電影</a></div>
+            <div class="col-sm"><a href="../tobecontinue/tobecontinue.html">最新速報</a></div>
+            <div class="col-sm"><a href="../Original/Original.html">逃脫大眼仔</a></div>
+            <div class="col-sm"><a href="../Egg/egg.html">皮克斯迷因</a></div>
+            <div class="col-sm"><a href="../form.html">個性測驗</a></div>
+            <div class="col-sm"><a href="../AboutUs/aboutus.html">關於角色</a></div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>thank you for your watching</p>
+        <a href="https://twitter.com/Pixar" class="icon brands fa-twitter"><span>Twitter</span></a>
+        <a href="../homepage.html">回首頁</a>
+    </div>
+</body></html>

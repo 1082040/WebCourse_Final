@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>問卷調查</title>
+    <link rel="stylesheet" href="css/style.css" media="screen and (max-width:899px)">
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/form1.css" media="screen">
+    <link rel="stylesheet" href="css/form2.css" media="screen and (min-width:900px) and (max-width:1300px)">
+    <link rel="stylesheet" href="css/form3.css" media="screen and (max-width:899px)">
+    
+</head>
+
+<body>
+    <div id="header">
+        <img src="HPimage/pixar-banner.jpeg">
+    </div>
+    <div id="icon">
+        <ul>
+            <img src="HPimage/fff.png">
+            <li>個性測驗</li>
+        </ul>
+    </div>
+    <h1>測試你是哪個皮克斯角色?</h1>
+    <div>
+        <h2 id="question"></h2>
+        <div id="options"></div>
+    </div>
+    <input id="startButton"type="button"value="開始作答">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="form/data.js"></script>
+    <script src="form/main.js"></script>
+    <br>
+    <div class="footer">
+        <p>thank you for your watching</p>
+        <a href="https://twitter.com/Pixar" class="icon brands fa-twitter"><span>Twitter</span></a>
+        <a href="homepage.html">回首頁</a>
+    </div>
+    <script>
+        var a = document.getElementById("years");
+        var b = document.getElementById("a2");
+        a.addEventListener("change", function() {
+            b.value = a.value;
+        })
+    </script>
+</body>
+</html>
